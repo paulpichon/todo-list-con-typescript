@@ -1,0 +1,14 @@
+# node_modules
+node_modules/
+# .env
+.env
+# Salidas de compilación
+dist/
+*.js
+*.js.map
+*.d.ts
+# Configuración de TypeScript
+*.tsbuildinfo
+.cache/
+# Configuración local de Nodemon
+nodemon.json
