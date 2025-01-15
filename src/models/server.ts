@@ -6,6 +6,8 @@ import express, { Application } from 'express';
 import { PORT } from "../config/config";
 // Rutas
 import { TaskRoutes } from '../routes/tasks';
+// Cors
+import cors from 'cors';
 
 // Clase Server
 export class Server{
@@ -28,8 +30,26 @@ export class Server{
         this.port = PORT ?? 5000;
         // Path de tasks
         this.tasksPath = '/api/tasks';
+
+        // * Llamamos los metodos
+        // Middlewares
+        this.middlewares();
+        // LLamar las rutas, para que se muestren los endpoints
+        this.routes();
+
     }
     // Metodos
+    middlewares() {
+        // cors
+        this.app.use(cors());
+        // Middlewares
+        this.app.use(express.json());
+        // Directorio publico
+        this.app.use(express.static('public'));
+        // *Esto solo funciona con  x-www-form-urlencoded POSTMAN
+        this.app.use( express.urlencoded({ extended: true }) );
+        
+    }
     // Metodos de las rutas
     routes() {
         // LLamamos la clase TaskRoutes y el metodo routes
