@@ -2,12 +2,6 @@
 import { Router } from 'express';
 // clase task controller
 import { TasksController } from '../controllers/tasks';
-// import {    deleteTask, 
-//             getTask, 
-//             postTask, 
-//             putTask 
-// } from '../controllers/tasks';
-
 
 export class TaskRoutes {
         // constructor
@@ -17,6 +11,7 @@ export class TaskRoutes {
     static get routes(): Router {
         // Asignar Router a una constante
         const router = Router();    
+        // Creamos una instancia de la clase TasksController
         const taskController = new TasksController();
         // Get
         router.get('/', taskController.getTask);

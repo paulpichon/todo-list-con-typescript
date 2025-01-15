@@ -29,12 +29,3 @@ export class TasksController {
         });
     }
 }
-
-
-// exports
-// export {
-//     getTask,
-//     postTask,
-//     putTask,
-//     deleteTask
-// }
