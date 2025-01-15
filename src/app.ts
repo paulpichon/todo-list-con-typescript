@@ -2,8 +2,14 @@
 // Para la creacion de la configuracion de un proyecto con TYPESCRIPT
 // Importamos la clase server
 import { Server } from "./models/server";
+// Funcion autoinvocada
+(async () => {
+    main();
+})();
 
-// Creamos una instancia de la clase Server
-const server = new Server();
-// llamamos el metodo listen para escuchar el puerto
-server.listen(); 
+function main() {
+    // Creamos una instancia de la clase Server
+    const server = new Server();
+    // llamamos el metodo listen para escuchar el puerto
+    server.listen(); 
+}
