@@ -8,7 +8,8 @@ dotenv.config();
 
 // creating a schema for strings
 const envSchema = z.object({
-    PORT: z.string().regex(/^\d+$/).transform(Number)
+    PORT: z.string().regex(/^\d+$/).transform(Number),
+    NODE_ENV: z.string().trim().toLowerCase().default("desarrollo"),
 });
 // Validar las variables de entorno
 const { success, error, data } = envSchema.safeParse(process.env);
@@ -20,5 +21,6 @@ if(!success) {
 }
 // Si todo esta bien retornamos las variables
 export const {
-    PORT
+    PORT,
+    NODE_ENV
 } = data;
