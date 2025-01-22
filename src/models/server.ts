@@ -3,7 +3,7 @@
 import express, { Application } from 'express';
 // Variable sde ZOD - archivo config.js
 // En este archivo se encuentra la variable POR, en donde tambien se verifica el tipo de dato
-import { PORT } from "../config/config";
+import { NODE_ENV, PORT } from "../config/config";
 // Rutas
 import { TaskRoutes } from '../routes/tasks';
 // Cors
@@ -58,7 +58,11 @@ export class Server{
     // Metodo para escuchar el puerto
     async listen() {
         this.app.listen(this.port, () => {
-            console.log(`Proyecto ejecutandose en el puerto: ${this.port} `)
+            if (NODE_ENV === 'desarrollo') {
+                console.log(`Proyecto ejecutandose en el puerto: ${this.port}, en ${ NODE_ENV } `)
+            } else {
+                console.log(`Proyecto ejecutandose en el puerto: ${this.port}, en ${ NODE_ENV } `)
+            }
         });
     }
 }
