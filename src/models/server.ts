@@ -1,6 +1,6 @@
 // Creacion de clase con la documentacion oficial de typescript: https://www.typescriptlang.org/docs/handbook/2/classes.html
 // Express
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 // Variable sde ZOD - archivo config.js
 // En este archivo se encuentra la variable POR, en donde tambien se verifica el tipo de dato
 import { NODE_ENV, PORT } from "../config/config";
@@ -8,6 +8,8 @@ import { NODE_ENV, PORT } from "../config/config";
 import { TaskRoutes } from '../routes/tasks';
 // Cors
 import cors from 'cors';
+import errorMiddleware from '../middlewares/errorMiddleware';
+import AppError from '../errors/CustomErrors';
 
 // Clase Server
 export class Server{
@@ -31,15 +33,9 @@ export class Server{
         // Path de tasks
         this.tasksPath = '/api/tasks';
 
-        // * Llamamos los metodos
-        // Middlewares
-        this.middlewares();
-        // LLamar las rutas, para que se muestren los endpoints
-        this.routes();
-
     }
     // Metodos
-    middlewares() {
+    async start() {
         // cors
         this.app.use(cors());
         // Middlewares
@@ -48,13 +44,17 @@ export class Server{
         this.app.use(express.static('public'));
         // *Esto solo funciona con  x-www-form-urlencoded POSTMAN
         this.app.use( express.urlencoded({ extended: true }) );
-        
-    }
-    // Metodos de las rutas
-    routes() {
-        // LLamamos la clase TaskRoutes y el metodo routes
+
+        // Se inician las rutas
         this.app.use(this.tasksPath, TaskRoutes.routes );
-    } 
+        // Ruta no encontrada
+        this.app.all("*", (req: Request, res: Response, next: NextFunction) => {
+            next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+        });
+        // errores
+        this.app.use(errorMiddleware);
+    }
+
     // Metodo para escuchar el puerto
     async listen() {
         this.app.listen(this.port, () => {

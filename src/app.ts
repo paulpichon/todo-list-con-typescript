@@ -10,6 +10,8 @@ import { Server } from "./models/server";
 function main() {
     // Creamos una instancia de la clase Server
     const server = new Server();
+    // Se inicia el metodo start()
+    server.start();
     // llamamos el metodo listen para escuchar el puerto
     server.listen(); 
 }
