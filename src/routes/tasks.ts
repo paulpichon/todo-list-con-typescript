@@ -1,11 +1,13 @@
 // Router express
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 // clase task controller
 import { TasksController } from '../controllers/tasks';
+// Importamos la clase AppError
+import AppError from '../errors/CustomErrors';
 
 export class TaskRoutes {
-        // constructor
-    // constructor(){}
+    // constructor
+    constructor(){}
     
     // getter static
     static get routes(): Router {
@@ -21,6 +23,14 @@ export class TaskRoutes {
         router.put('/', taskController.putTask);
         // Delete
         router.delete('/', taskController.deleteTask);
+        // Ruta de prueba, solo en modo desarollo
+        router.get("/error", (req: Request, res: Response, next: NextFunction) => {
+            try {
+              throw new AppError("Este es un error personalizado", 404);
+            } catch (error) {
+              next(error);
+            }
+        });
 
         return router;
     }
