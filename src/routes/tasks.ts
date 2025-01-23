@@ -20,9 +20,9 @@ export class TaskRoutes {
         //Post
         router.post('/', taskController.postTask);
         // Put
-        router.put('/', taskController.putTask);
+        router.put('/:id', taskController.putTask);
         // Delete
-        router.delete('/', taskController.deleteTask);
+        router.delete('/:id', taskController.deleteTask);
         // Ruta de prueba, solo en modo desarollo
         router.get("/error", (req: Request, res: Response, next: NextFunction) => {
             try {
