@@ -8,8 +8,12 @@ dotenv.config();
 
 // creating a schema for strings
 const envSchema = z.object({
+    // Puerto default
     PORT: z.string().regex(/^\d+$/).transform(Number),
+    // Entorno de desarrollo
     NODE_ENV: z.string().trim().toLowerCase().default("desarrollo"),
+    // Connexion a la BD
+    MONGODB_CONNECTION: z.string().trim().url(),
 });
 // Validar las variables de entorno
 const { success, error, data } = envSchema.safeParse(process.env);
@@ -22,5 +26,6 @@ if(!success) {
 // Si todo esta bien retornamos las variables
 export const {
     PORT,
-    NODE_ENV
+    NODE_ENV,
+    MONGODB_CONNECTION
 } = data;
