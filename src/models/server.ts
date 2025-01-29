@@ -10,6 +10,7 @@ import { TaskRoutes } from '../routes/tasks';
 import cors from 'cors';
 import errorMiddleware from '../middlewares/errorMiddleware';
 import AppError from '../errors/CustomErrors';
+import { databaseConnection } from '../config/database/config';
 
 // Clase Server
 export class Server{
@@ -53,7 +54,10 @@ export class Server{
         });
         // errores
         this.app.use(errorMiddleware);
+        // Database connection
+        await databaseConnection();
     }
+
 
     // Metodo para escuchar el puerto
     async listen() {
