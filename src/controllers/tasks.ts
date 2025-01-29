@@ -1,6 +1,8 @@
 // Express
 import { Request, Response } from "express"
 
+import Task from "../models/task";
+
 export class TasksController {
     // no hay inyeccion de dependencias
     constructor(){}
@@ -11,9 +13,16 @@ export class TasksController {
         });
     }
     // POST
-    public postTask = (req: Request, res: Response) => {
+    public postTask = async (req: Request, res: Response) => {
+        // obtener los datos del form
+        const {nombre, status, descripcion, prioridad} = req.body;
+        // crear la tarea
+        const task = new Task({nombre, status, descripcion, prioridad});
+        // guardar la tarea
+        await task.save();
+        // responder con la tarea guardada
         res.json({
-            msg: 'POST TASK'
+            task
         });
     }
     // PUT
