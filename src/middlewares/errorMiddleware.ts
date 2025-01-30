@@ -30,6 +30,7 @@ const errorMiddleware = (
         message: "Algo salio mal, contactar a soporte: error no operacional",
         // ...( NODE_ENV === "desarrollo" && { stack: err.stack }), //Opcional: mostrar o no el stack del error
         });
+        next(err); // Importante: pasar el error al siguiente middleware si existe: si genera algun error podemos quitar este next( err )
     }
 };
 // Exports  
