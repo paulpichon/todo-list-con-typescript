@@ -1,9 +1,14 @@
 // Router express
 import { NextFunction, Request, Response, Router } from 'express';
+// express validator
+import { check } from 'express-validator';
 // clase task controller
 import { TasksController } from '../controllers/tasks';
 // Importamos la clase AppError
 import AppError from '../errors/CustomErrors';
+// Validar campos
+import { validarCampos } from '../middlewares/validar-campos';
+
 
 export class TaskRoutes {
     // constructor
@@ -18,7 +23,11 @@ export class TaskRoutes {
         // Get
         router.get('/', taskController.getTask);
         //Post
-        router.post('/', taskController.postTask);
+        router.post('/', [
+          check('nombre', 'El nombre es obligatorio').trim().notEmpty(),
+          // valida campos
+          validarCampos
+        ], taskController.postTask);
         // Put
         router.put('/:id', taskController.putTask);
         // Delete
