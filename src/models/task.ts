@@ -35,6 +35,12 @@ const TaskSchema = new Schema<Itask>({
         type: Date
     }
 });
-
+// quitar __V
+TaskSchema.methods.toJSON = function() {
+    // desestructurar los atributos/propiedades que no queremos
+    const {__v, ...task} = this.toObject();
+    // devolver task
+    return task;
+}
 // export
 export = model<Itask>('Task', TaskSchema);

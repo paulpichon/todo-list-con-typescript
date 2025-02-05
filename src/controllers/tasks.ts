@@ -21,9 +21,7 @@ export class TasksController {
         // guardar la tarea
         await task.save();
         // responder con la tarea guardada
-        res.json({
-            task
-        });
+        res.json( task );
     }
     // PUT
     public putTask = (req: Request, res: Response) => {
