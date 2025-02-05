@@ -29,6 +29,10 @@ export class TaskRoutes {
           check('status', 'El status es obligatorio: [pendiente, completada]').trim().isIn(['pendiente', 'completada']),
           // Descripcion
           check('descripcion', 'La descripcion es obligatoria').trim().notEmpty(),
+          // prioridad
+          check('prioridad', 'La prioridad es obligatoria:[1, 2, 3]').trim().notEmpty().isInt({min: 1, max: 3}),
+          // Tambien se podria hacer de esta forma, pero podria darnos un error al introducir string, errores en consola
+          // check('prioridad', 'La prioridad es obligatoria:[1, 2, 3]').trim().notEmpty().isLength({ min: 1, max: 3}),
           // valida campos
           validarCampos
         ], taskController.postTask);
