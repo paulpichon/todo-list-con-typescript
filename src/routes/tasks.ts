@@ -27,6 +27,8 @@ export class TaskRoutes {
           check('nombre', 'El nombre es obligatorio').trim().notEmpty(),
           // status
           check('status', 'El status es obligatorio: [pendiente, completada]').trim().isIn(['pendiente', 'completada']),
+          // Descripcion
+          check('descripcion', 'La descripcion es obligatoria').trim().notEmpty(),
           // valida campos
           validarCampos
         ], taskController.postTask);
