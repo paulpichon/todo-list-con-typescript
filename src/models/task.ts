@@ -8,9 +8,9 @@ import Itask from "../interfaces/interfaces";
 // Modelo Task
 const TaskSchema = new Schema<Itask>({
     // mongoose.Schema.Types.ObjectId ---> solo sirve para definicion de Schema no se puede usar en otro lado de nuestro codigo
-    _id: {
-        type: mongoose.Schema.Types.ObjectId
-    },
+    // _id: {
+    //     type: mongoose.Schema.Types.ObjectId
+    // },
     nombre: {
         type: String,
         required: true,
