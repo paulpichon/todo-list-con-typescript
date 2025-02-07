@@ -2,7 +2,7 @@
 // Mongoose
 import mongoose, { Schema, model } from "mongoose";
 // Importamos la interfas del schema
-import Itask from "../interfaces/interfaces";
+import { Itask } from "../interfaces/interfaces";
 
 
 // Modelo Task
