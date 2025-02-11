@@ -28,7 +28,7 @@ export class TaskRoutes {
           // status
           check('status', 'El status es obligatorio: [pendiente, completada]').trim().isIn(['pendiente', 'completada']),
           // Descripcion
-          check('descripcion', 'La descripcion es obligatoria').trim().notEmpty(),
+          check('descripcion', 'La descripcion es obligatoria').optional().trim().notEmpty(),
           // prioridad
           check('prioridad', 'La prioridad es obligatoria:[1, 2, 3]').trim().notEmpty().isInt({min: 1, max: 3}),
           // Tambien se podria hacer de esta forma, pero podria darnos un error al introducir string, errores en consola
@@ -37,7 +37,24 @@ export class TaskRoutes {
           validarCampos
         ], taskController.postTask);
         // Put
-        router.put('/:id', taskController.putTask);
+        router.put('/:id', [
+          // Validar el ID sea un ObjectId de mongoose
+          check('id', 'El ID no es un MONGOID').isMongoId(),
+          // Validar que el ID existe en la BD
+          
+          // Validar el nombre del task
+          check('nombre', 'El nombre es obligatorio').trim().notEmpty(),
+          // status
+          check('status', 'El status es obligatorio: [pendiente, completada]').trim().isIn(['pendiente', 'completada']),
+          // Descripcion
+          check('descripcion', 'La descripcion es obligatoria').optional().trim().notEmpty(),
+          // prioridad
+          check('prioridad', 'La prioridad es obligatoria:[1, 2, 3]').trim().notEmpty().isInt({min: 1, max: 3}),
+          // Tambien se podria hacer de esta forma, pero podria darnos un error al introducir string, errores en consola
+          // check('prioridad', 'La prioridad es obligatoria:[1, 2, 3]').trim().notEmpty().isLength({ min: 1, max: 3}),
+          // valida campos
+          validarCampos
+        ], taskController.putTask);
         // Delete
         router.delete('/:id', taskController.deleteTask);
         // Ruta de prueba, solo en modo desarollo
