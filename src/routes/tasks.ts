@@ -8,6 +8,8 @@ import { TasksController } from '../controllers/tasks';
 import AppError from '../errors/CustomErrors';
 // Validar campos
 import { validarCampos } from '../middlewares/validar-campos';
+// Validar el ID del task existe
+import { validarIdTask } from '../helpers/validar-id-task';
 
 
 export class TaskRoutes {
@@ -41,7 +43,7 @@ export class TaskRoutes {
           // Validar el ID sea un ObjectId de mongoose
           check('id', 'El ID no es un MONGOID').isMongoId(),
           // Validar que el ID existe en la BD
-          
+          check('id').custom( validarIdTask ),
           // Validar el nombre del task
           check('nombre', 'El nombre es obligatorio').trim().notEmpty(),
           // status
