@@ -47,9 +47,14 @@ export class TasksController {
         });
     }
     // DELETE
-    public deleteTask = (req: Request, res: Response) => {
-        res.json({
-            msg: 'DELETE TASK'
+    public deleteTask = async (req: Request<RequestParamsId>, res: Response) => {
+        // obtener el ID
+        const { id } = req.params;
+        // vamos a eliminar fisicamente
+        const task = await Task.findByIdAndDelete( id, {
+            new: true
         });
+        // Respuesta
+        res.json( task );
     }
 }
