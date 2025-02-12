@@ -28,6 +28,7 @@ const TaskSchema = new Schema<Itask>({
     prioridad: {
         type: Number,
         required: true,
+        default: 1, //donde: 1 = Importante, 2 = Algo importante, 3 = no importante
         min: 1, // crea un rango entre 1
         max: 3 //y el numero 3, esto podria hacerce con enum[1, 2, 3]
     },
