@@ -20,7 +20,7 @@ const TaskSchema = new Schema<Itask>({
         type: String,
         required: true,
         default: 'pendiente',
-        enum: ['pendiente', 'completada']
+        enum: ['pendiente', 'en-proceso', 'completada']
     },
     descripcion: {
         type: String,
