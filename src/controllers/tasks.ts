@@ -16,12 +16,12 @@ export class TasksController {
     public getTask =  async (req: Request<{}, {}, {}, IRequestParamsGet>, res: Response) => {
         try {
             // Extraer parámetros con valores por defecto
-            const { limite = '5', desde = '0', status, prioridad } = req.query;
+            const { limite = '10', desde = '0', status, prioridad } = req.query;
     
             // Convertir a números cuando sea necesario, ya que vienen con STRINGS
-            const limitNumber = Number(limite);
-            const offsetNumber = Number(desde);
-            const priorityNumber = prioridad ? Number(prioridad) : undefined;
+            const limitNumber = parseInt(limite);
+            const offsetNumber = parseInt(desde);
+            const priorityNumber = prioridad ? parseInt(prioridad) : undefined;
             
             // Se valida con los middlewares
             // if (isNaN(limitNumber) || isNaN(offsetNumber) || (prioridad !== undefined && isNaN(priorityNumber!))) {
@@ -34,11 +34,30 @@ export class TasksController {
             if (priorityNumber !== undefined) filter.prioridad = priorityNumber;
     
             // Obtener tareas con filtros aplicados
-            const tasks = await Task.find(filter)
-                .skip(offsetNumber)
-                .limit(limitNumber);
-    
+            // const tasks = await Task.find(filter)
+            //     .skip(offsetNumber)
+            //     .limit(limitNumber);
+            
+            // total de registros
+            // const totalRegistros = await Task.countDocuments();
+            // total de registros con filtros
+            // const totalRegistrosFiltros = await Task.countDocuments(filter);
+            
+            // Promise
+            // De esta forma baja de forma importante el tiempo de respuesta +/- 133ms
+            const [tasks, totalRegistros, totalRegistrosFiltros] = await Promise.all([
+                Task.find(filter)
+                    .sort({ _id: 1 })
+                    .limit(limitNumber)
+                    .skip(offsetNumber),
+                Task.countDocuments(),
+                Task.countDocuments(filter)
+            ]);
+            
+            // respuesta
             res.json({
+                totalRegistros,
+                totalRegistrosFiltros,
                 limite: limitNumber,
                 desde: offsetNumber,
                 filtros: { status, prioridad: priorityNumber },
