@@ -23,7 +23,14 @@ export class TaskRoutes {
         // Creamos una instancia de la clase TasksController
         const taskController = new TasksController();
         // Get
-        router.get('/', taskController.getTask);
+        router.get('/', [
+          check('limite', 'El parametro LIMITE debe ser un número').optional().isInt(),
+          check('desde', 'El parametro DESDE debe ser un número').optional().isInt(),
+          check('prioridad', 'El parametro PRIORIDAD debe ser un número').optional().isInt(),
+          check('status', 'El parametro STATUS no debe estar vacio: [pendiente, completada, en-proceso]').optional().notEmpty().isIn([ 'pendiente', 'completada', 'en-proceso']),
+          // valida campos
+          validarCampos
+        ], taskController.getTask);
         //Post
         router.post('/', [
           check('nombre', 'El nombre es obligatorio').trim().notEmpty(),
