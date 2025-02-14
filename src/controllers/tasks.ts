@@ -22,10 +22,11 @@ export class TasksController {
             const limitNumber = Number(limite);
             const offsetNumber = Number(desde);
             const priorityNumber = prioridad ? Number(prioridad) : undefined;
-    
-            if (isNaN(limitNumber) || isNaN(offsetNumber) || (prioridad !== undefined && isNaN(priorityNumber!))) {
-                res.status(400).json({ message: 'Los parámetros deben ser números válidos' });
-            }
+            
+            // Se valida con los middlewares
+            // if (isNaN(limitNumber) || isNaN(offsetNumber) || (prioridad !== undefined && isNaN(priorityNumber!))) {
+            //     res.status(400).json({ message: 'Los parámetros deben ser números válidos' });
+            // }
     
             // Construcción dinámica del filtro
             const filter: any = {};
