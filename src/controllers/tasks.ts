@@ -12,6 +12,15 @@ import { IRequestParamsGet,
 export class TasksController {
     // no hay inyeccion de dependencias
     constructor(){}
+    // GET por ID
+    public getTaskPorId = async ( req: Request, res: Response ): Promise<void> => {
+        // Obtener el ID del TASK
+        const { id } = req.params;
+        // buscar en la BD
+        const task = await Task.findById( id );
+        // respuesta
+        res.json( task );
+    }
     // GET
     public getTask =  async (req: Request<{}, {}, {}, IRequestParamsGet>, res: Response) => {
         try {
