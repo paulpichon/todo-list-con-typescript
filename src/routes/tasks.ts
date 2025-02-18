@@ -22,6 +22,15 @@ export class TaskRoutes {
         const router = Router();    
         // Creamos una instancia de la clase TasksController
         const taskController = new TasksController();
+        // Get por ID
+        router.get('/:id', [
+          // Validar el ID sea un ObjectId de mongoose
+          check('id', 'El ID no es un MONGOID').isMongoId(),
+          // Validar que el ID existe en la BD
+          check('id').custom( validarIdTask ),
+          // valida campos
+          validarCampos
+        ], taskController.getTaskPorId);
         // Get
         router.get('/', [
           check('limite', 'El parametro LIMITE debe ser un número').optional().isInt(),
